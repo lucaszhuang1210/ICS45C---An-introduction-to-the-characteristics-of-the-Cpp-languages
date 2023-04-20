@@ -83,7 +83,65 @@ Coins coins_required_for_cents(int amount_in_cents)
     return Coins(q, d, n, p);
 }
 
-void print_cents(int cents, ostream& out=cout)
+void print_cents(int cents, ostream& out)
+{ 
+    out << "$" << cents/100 << "." << cents/10%10 << cents%10;
+}
+
+Coins ask_for_coins(istream& in, ostream& out)
 {
-    out << "$" << cents/100.0 << endl;
+    int q, d, n, p;
+    out << "Quarters? ";
+    in >> q;
+    out << "Dimes? ";
+    in >> d;
+    out << "Nickels? ";
+    in >> n;
+    out << "Pennies? ";
+    in >> p;
+
+    return Coins(q, d, n, p);
+}
+
+void coins_menu(istream& in, ostream& out)
+{
+    Coins myCoins = Coins(0, 0, 0, 0);
+    char input = '0';
+
+    out << "Coins Menu" << endl << endl;
+    while(input != '4')
+    {
+        out << "1. Deposit Change" << endl
+            << "2. Extract Change" << endl
+            << "3. Print Balance" << endl
+            << "4. Exit" << endl << endl;
+        in >> input;
+        out << endl;
+
+            if(input == '1')
+            {
+                Coins amount = ask_for_coins(in, out);
+                myCoins.deposit_coins(amount);
+                out << endl
+                    << "Thank you!"
+                    << endl << endl;
+            }else if (input == '2'){
+                Coins amount = ask_for_coins(in, out);
+                out << endl
+                    << "Thank you!"
+                    << endl << endl;
+                if(myCoins.has_exact_change_for_coins(amount))
+                    myCoins.extract_exact_change(amount);
+                else
+                    out << "ERROR: Insufficient Funds" << endl << endl;
+            }else if (input == '3'){
+                print_cents(myCoins.total_value_in_cents(), out);
+                out << endl 
+                    << "Thank you!" 
+                    << endl << endl;
+            }else if(input != '4'){
+                out << "ERROR: Invalid Command" << endl << endl;
+            }
+       } 
+
 }
