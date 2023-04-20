@@ -143,5 +143,6 @@ void coins_menu(istream& in, ostream& out)
                 out << "ERROR: Invalid Command" << endl << endl;
             }
        } 
+       in >> input;
 
 }
