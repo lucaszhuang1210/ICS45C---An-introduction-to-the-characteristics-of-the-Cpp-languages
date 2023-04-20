@@ -114,7 +114,8 @@ void coins_menu(istream& in, ostream& out)
         out << "1. Deposit Change" << endl
             << "2. Extract Change" << endl
             << "3. Print Balance" << endl
-            << "4. Exit" << endl << endl;
+            << "4. Exit" << endl << endl
+            << "User Input: ";
         in >> input;
         out << endl;
 
@@ -143,6 +144,5 @@ void coins_menu(istream& in, ostream& out)
                 out << "ERROR: Invalid Command" << endl << endl;
             }
        } 
-       in >> input;
 
 }
