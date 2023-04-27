@@ -18,14 +18,128 @@ String::String(const String &s)
     strcpy(buf, s.buf);
 }
 
+String & String::operator =(const String &s)
+{
+    strcpy(buf, s.buf);
+    return *this;
+}
+
+char & String::operator [](int index)
+{
+    if (index >= MAXLEN)
+    {
+        cout << "ERROR: Index Out Of Bounds." << endl;
+        return buf[0];
+    }else{
+        return buf[index];
+    }
+}
+
 int String::size() const
 {
     return strlen(buf);
 }
 
+String String::reverse() const
+{
+    String output;
+    reverse_cpy(output.buf, buf);
+    return output;
+}
+
+int String::indexOf(char c) const
+{
+    const char *p = strchr(buf, c);
+    return p - buf;
+}
+
+int String::indexOf(const String &s) const
+{
+    const char *p = strstr(buf, s.buf);
+    return p - buf;
+}
+
+bool String::operator==(const String &s) const
+{
+    return strcmp(buf, s.buf) == 0;
+}
+
+bool String::operator!=(const String &s) const
+{
+    return strcmp(buf, s.buf) != 0;
+}
+
+bool String::operator>(const String &s) const
+{
+    return strcmp(buf, s.buf) > 0;
+}
+
+bool String::operator<(const String &s) const
+{
+    return strcmp(buf, s.buf) < 0;
+}
+
+bool String::operator<=(const String &s) const
+{
+    return strcmp(buf, s.buf) <= 0;
+}
+
+bool String::operator>=(const String &s) const
+{
+    return strcmp(buf, s.buf) >= 0;
+}
+
+String String::operator+(const String &s) const
+{
+    String output = String(buf);
+    int len = output.size();
+    if ( (len + s.size()) >= MAXLEN)
+        cout << "ERROR: Index Out Of Bounds." << endl; 
+    strncat(output.buf, s.buf, MAXLEN-1-len);
+    return output;
+}
+
+String & String::operator+=(const String &s)
+{
+    int len = size();
+    String output = String(s.buf);
+    if ( (len + s.size()) >= MAXLEN)
+        cout << "ERROR: Index Out Of Bounds." << endl; 
+    strncat(buf, output.buf, MAXLEN-1-len);
+    return *this;
+}
+
+void String::print(ostream &out) const
+{
+    out << buf;
+}
+
+void String::read(istream &in)
+{
+    in >> buf;
+    if(strlen(buf) >= MAXLEN)
+        cout << "ERROR: String Capacity Exceeded." << endl;
+    buf[MAXLEN-1] = '\0';
+}
+
 String::~String() 
 {
-    cout << "String <buf> is destructing" << endl;
+    //cout << "String " << buf << "is destructing" << endl;
+}
+
+
+
+//*************functions****************
+ostream &operator <<(ostream &out, const String &s)
+{
+    s.print(out);
+    return out;
+}
+
+istream &operator >>(istream &in, String &s)
+{
+    s.read(in);
+    return in;
 }
 
 

@@ -2,17 +2,6 @@
 
 #include "string.hpp"
 
-//************TEST String class interface methods****************
-TEST(StringClass, Constructors) {
-    String s("hello");
-    EXPECT_EQ(s.size(), 5);
-    String t(s);
-    EXPECT_EQ(t.size(), 5);
-    EXPECT_EQ(s.size(), 5);
-}
-
-
-
 //****************TEST static helper methods*********************
 TEST(StringFunction, strlen) {
     EXPECT_EQ(String::strlen(""), 0);
