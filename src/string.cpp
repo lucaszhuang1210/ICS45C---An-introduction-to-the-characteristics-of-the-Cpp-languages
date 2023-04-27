@@ -8,7 +8,7 @@ using namespace std;
 //*************String class interface methods****************
 String::String(const char *s)
 {
-    if (strlen(s) >= MAXLEN)
+    if (strlen(s) >= MAXLEN-1)
         cout << "ERROR: String Capacity Exceeded." << endl;
     strncpy(buf, s, MAXLEN-1);
 }
@@ -26,7 +26,7 @@ String & String::operator =(const String &s)
 
 char & String::operator [](int index)
 {
-    if (index >= MAXLEN-1)
+    if (index > MAXLEN-1)
     {
         cout << "ERROR: Index Out Of Bounds." << endl;
         return buf[0];
