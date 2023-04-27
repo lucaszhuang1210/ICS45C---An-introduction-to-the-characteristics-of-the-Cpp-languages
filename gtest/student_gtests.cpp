@@ -113,6 +113,9 @@ TEST(StringFunction, strchr) {
     
     const char *p2 = String::strchr(s1, 's');
     EXPECT_EQ(p2, (s1+3));
+
+    const char *p2 = String::strchr(s1, '\0');
+    EXPECT_EQ(p2, (s1+3));
 }
 
 TEST(StringFunction, strstr) {
@@ -122,4 +125,8 @@ TEST(StringFunction, strstr) {
     
     const char *p2 = String::strstr(s1, "String");
     EXPECT_EQ(p2, (s1+10));
+
+    int len = String::strlen(s1);
+    const char *p3 = String::strstr(s1, "");
+    EXPECT_EQ(p2, (s1+len));
 }

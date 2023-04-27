@@ -224,14 +224,19 @@ void String::reverse_cpy(char *dest, const char *src)
 
 const char *String::strchr(const char *str, char c)
 {
-    for (const char *p = str; *p != '\0'; ++p)
+    const char *p;
+    for (p = str; *p != '\0'; ++p)
         if (*p == c)
             return p;
+    if (c == '\0')
+        return p;
     return nullptr;
 }
 
 const char *String::strstr(const char *haystack, const char *needle)
-{
+{   
+    if (strlen(needle) == 0)
+        return haystack;
     int len = strlen(needle);
     for(const char *p = haystack; (p = strchr(p, needle[0])); ++p)
         if(strncmp(p, needle, len) == 0)
