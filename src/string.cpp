@@ -97,7 +97,7 @@ String String::operator+(const String &s) const
 {
     String output = String(buf);
     int len = output.size();
-    if ( (len + s.size()) >= MAXLEN)
+    if ( (len + s.size()) >= MAXLEN-1)
         cout << "ERROR: Index Out Of Bounds." << endl; 
     strncat(output.buf, s.buf, MAXLEN-1-len);
     return output;
@@ -107,7 +107,7 @@ String & String::operator+=(const String &s)
 {
     int len = size();
     String output = String(s.buf);
-    if ( (len + s.size()) >= MAXLEN)
+    if ( (len + s.size()) >= MAXLEN-1)
         cout << "ERROR: Index Out Of Bounds." << endl; 
     strncat(buf, output.buf, MAXLEN-1-len);
     return *this;
@@ -206,7 +206,7 @@ int String::strcmp(const char *left, const char *right)
 int String::strncmp(const char *left, const char *right, int n)
 {
     int i;
-    for(i=0; right[i] != '\0' && i < n; ++i)
+    for(i=0; i < n; ++i)
         if (left[i] != right[i])
             return left[i] - right[i];
     return 0;

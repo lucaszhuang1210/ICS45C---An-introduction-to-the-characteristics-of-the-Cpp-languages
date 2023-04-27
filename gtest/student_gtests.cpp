@@ -90,6 +90,7 @@ TEST(StringFunction, strncmp) {
 
 
     EXPECT_EQ(String::strncmp("", "", 0), 0);
+    EXPECT_LT(String::strncmp(s1, s2, 8), 0);
 }
 
 TEST(StringFunction, reverse_cpy) {
