@@ -2,6 +2,18 @@
 
 #include "string.hpp"
 
+//************TEST String class interface methods****************
+TEST(StringClass, Constructors) {
+    String s("hello");
+    EXPECT_EQ(s.size(), 5);
+    String t(s);
+    EXPECT_EQ(t.size(), 5);
+    EXPECT_EQ(s.size(), 5);
+}
+
+
+
+//****************TEST static helper methods*********************
 TEST(StringFunction, strlen) {
     EXPECT_EQ(String::strlen(""), 0);
     EXPECT_EQ(String::strlen("foo"), 3);
@@ -92,13 +104,33 @@ TEST(StringFunction, strncmp) {
 }
 
 TEST(StringFunction, reverse_cpy) {
-    EXPECT_TRUE(false);
+    char result[10];
+    String::reverse_cpy(result, "abc");
+    EXPECT_STREQ(result, "cba");
+
+    char oneChar[10];
+    String::reverse_cpy(oneChar, "a");
+    EXPECT_STREQ(oneChar, "a");
+
+    char empty_str[10];
+    String::reverse_cpy(empty_str, "");
+    EXPECT_STREQ(empty_str, "");
 }
 
 TEST(StringFunction, strchr) {
-    EXPECT_TRUE(false);
+    char s1[] = "This is a String";
+    const char *p = String::strchr(s1, '1');
+    EXPECT_EQ(p, nullptr);
+    
+    const char *p2 = String::strchr(s1, 's');
+    EXPECT_EQ(p2, (s1+3));
 }
 
 TEST(StringFunction, strstr) {
-    EXPECT_TRUE(false);
+    char s1[] = "This is a String";
+    const char *p = String::strstr(s1, "NOTHING");
+    EXPECT_EQ(p, nullptr);
+    
+    const char *p2 = String::strstr(s1, "String");
+    EXPECT_EQ(p2, (s1+10));
 }

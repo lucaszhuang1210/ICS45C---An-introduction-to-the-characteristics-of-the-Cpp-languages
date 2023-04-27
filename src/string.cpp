@@ -9,11 +9,23 @@ using namespace std;
 String::String(const char *s)
 {
     strncpy(buf, s, MAXLEN-1);
+    if (strlen(s) >= MAXLEN)
+        cout << "ERROR: String Capacity Exceeded." << endl;
+}
+
+String::String(const String &s)
+{
+    strcpy(buf, s.buf);
 }
 
 int String::size() const
 {
     return strlen(buf);
+}
+
+String::~String() 
+{
+    cout << "String <buf> is destructing" << endl;
 }
 
 
@@ -87,7 +99,7 @@ void String::reverse_cpy(char *dest, const char *src)
     int i;
     int len = strlen(src);
     for (i=0; src[i] != '\0'; ++i)
-        dest[len-i] = src[i];
+        dest[len-1-i] = src[i];
     dest[i] = '\0';
 }
 
