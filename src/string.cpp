@@ -50,12 +50,16 @@ String String::reverse() const
 int String::indexOf(char c) const
 {
     const char *p = strchr(buf, c);
+    if (p == nullptr)
+        return -1;
     return p - buf;
 }
 
 int String::indexOf(const String &s) const
 {
     const char *p = strstr(buf, s.buf);
+    if (p == nullptr)
+        return -1;
     return p - buf;
 }
 
