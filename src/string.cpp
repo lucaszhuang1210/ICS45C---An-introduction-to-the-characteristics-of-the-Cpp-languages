@@ -207,7 +207,7 @@ int String::strncmp(const char *left, const char *right, int n)
 {
     int i;
     for(i=0; i < n; ++i)
-        if (left[i] != right[i])
+        if (left[i] != right[i] || (left[i] == '\0' && right[i] == '\0'))
             return left[i] - right[i];
     return 0;
 }

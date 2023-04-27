@@ -93,6 +93,8 @@ TEST(StringFunction, strncmp) {
     EXPECT_EQ(String::strncmp("Hello", "HelloW", 5), 0);
     EXPECT_LT(String::strncmp("Hello", "HelloW", 6), 0);
     EXPECT_GT(String::strncmp("Hello", "", 8), 0);
+    EXPECT_LT(String::strncmp("Hello", "HelloW", 8), 0);
+    EXPECT_EQ(String::strncmp("W", "W", 2), 0);
 }
 
 TEST(StringFunction, reverse_cpy) {
