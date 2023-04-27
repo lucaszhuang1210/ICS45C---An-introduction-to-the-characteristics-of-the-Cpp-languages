@@ -9,7 +9,7 @@ using namespace std;
 String::String(const char *s)
 {
     if (strlen(s) > MAXLEN-1)
-        cout << "ERROR: String Capacity Exceeded." << endl;
+        cout << "ERROR: String Capacity Exceeded" << endl;
     strncpy(buf, s, MAXLEN-1);
 }
 
@@ -26,9 +26,9 @@ String & String::operator =(const String &s)
 
 char & String::operator [](int index)
 {
-    if (index > MAXLEN-1)
+    if (!in_bounds(index))
     {
-        cout << "ERROR: Index Out Of Bounds." << endl;
+        cout << "ERROR: Index Out Of Bounds" << endl;
         return buf[0];
     }else{
         return buf[index];
