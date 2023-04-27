@@ -97,7 +97,7 @@ String String::operator+(const String &s) const
 {
     String output = String(buf);
     int len = output.size();
-    if ( (len + s.size()) >= MAXLEN-1)
+    if ( (len + s.size()) > MAXLEN-1)
         cout << "ERROR: Index Out Of Bounds." << endl; 
     strncat(output.buf, s.buf, MAXLEN-1-len);
     return output;
@@ -107,7 +107,7 @@ String & String::operator+=(const String &s)
 {
     int len = size();
     String output = String(s.buf);
-    if ( (len + s.size()) >= MAXLEN-1)
+    if ( (len + s.size()) > MAXLEN-1)
         cout << "ERROR: Index Out Of Bounds." << endl; 
     strncat(buf, output.buf, MAXLEN-1-len);
     return *this;
