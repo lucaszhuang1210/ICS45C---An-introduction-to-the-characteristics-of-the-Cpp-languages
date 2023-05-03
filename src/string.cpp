@@ -23,7 +23,7 @@ String::String(String &&s)
 }
 
 String::String(int length)
-:buf(new char[length])
+:buf(new char[length+1])
 {
 }
 
@@ -34,7 +34,7 @@ void String::swap(String &s)
 
 String &String::operator=(const String &s)
 {
-    delete [] buf;
+    delete[] buf;
     buf = strdup(s.buf);
     return *this;
 }
@@ -129,7 +129,7 @@ bool String::operator>=(const String &s) const
 
 String String::operator+(const String &s) const
 {
-    String output{size() + s.size() + 1};
+    String output{size() + s.size()};
     strcpy(output.buf, buf);
     strcat(output.buf, s.buf);
     return output;
