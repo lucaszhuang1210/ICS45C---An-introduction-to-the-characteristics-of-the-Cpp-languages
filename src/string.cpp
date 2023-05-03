@@ -34,13 +34,18 @@ void String::swap(String &s)
 
 String &String::operator=(const String &s)
 {
-    delete[] buf;
+    if (this == &s)
+        return *this;
+    if (buf)
+        delete[] buf;
     buf = strdup(s.buf);
     return *this;
 }
 
 String &String::operator=(String &&s)
 {
+    if (this == &s)
+        return *this;
     delete[] buf;
     buf = s.buf;
     s.buf = nullptr;
