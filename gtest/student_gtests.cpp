@@ -29,11 +29,72 @@ TEST(ListTests, Length) {
     Node* const head = list::from_string("foo");
     EXPECT_EQ(list::length(head), 3);
     list::free(head);
+
+    Node* const l1 = list::from_string("");
+    EXPECT_EQ(list::length(l1), 0);
+    list::free(l1);
 }
 
 // Add remaining tests below. All tests should follow
 // the format of `TEST(ListTests, <TestName>){}`.
 
-TEST(ListTests, ReplaceMe) {
-    EXPECT_TRUE(false);
+/*
+TEST(ListTests, Print) {
+    Node* const l1 = list::from_string("foo");
+    list::print(cout, l1);
+    list::free(l1);
+
+    Node* const l2 = list::from_string("");
+    list::print(cout, l2);
+    list::free(l2);
 }
+*/
+
+TEST(ListTests, Copy) {
+    Node* const l1 = list::from_string("");
+    EXPECT_EQ(list::length(list::copy(l1)), length(l1));
+    list::free(l1);
+
+    Node* const l2 = list::from_string("foo");
+    Node* output = copy(l2);
+
+    EXPECT_EQ(output->data, l2->data);
+    EXPECT_EQ(length(output), length(l2));
+
+    list::free(l2);
+    list::free(output);
+}
+
+TEST(ListTests, Compare) {
+    Node* const l1 = list::from_string("foo");
+    Node* const l2 = list::from_string("foo");
+    Node* const l3 = list::from_string("foo ");
+    Node* const l4 = list::from_string("");
+
+    EXPECT_EQ(list::compare(l1, l2), 0);
+    EXPECT_LT(list::compare(l1, l3), 0);
+    EXPECT_GT(list::compare(l1, l4), 0);
+
+    list::free(l1);
+    list::free(l2);
+    list::free(l3);
+    list::free(l4);
+}
+
+TEST(ListTests, NCompare) {
+    Node* const l1 = list::from_string("foo");
+    Node* const l2 = list::from_string("foo");
+    Node* const l3 = list::from_string("foo ");
+    Node* const l4 = list::from_string("");
+
+    EXPECT_EQ(list::compare(l1, l2, 3), 0);
+    EXPECT_EQ(list::compare(l1, l3, 3), 0);
+    EXPECT_GT(list::compare(l1, l4, 3), 0);
+
+    list::free(l1);
+    list::free(l2);
+    list::free(l3);
+    list::free(l4);
+}
+
+
