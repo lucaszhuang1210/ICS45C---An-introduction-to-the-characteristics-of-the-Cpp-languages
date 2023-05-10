@@ -144,8 +144,9 @@ TEST(ListTests, Append) {
     Node* l31 = list::append(l3,l1);
     EXPECT_EQ(l31->data, 'f');
 
-    //Node* l11 = list::append(l1,l1);
-    //EXPECT_EQ(list::last(l11)->data, 'o');
+    Node* l11 = list::append(l1,l1);
+    EXPECT_EQ(list::last(l11)->data, 'o');
+    EXPECT_EQ(list::length(l11), 6);
 
     list::free(l1);
     list::free(l2);
@@ -154,14 +155,52 @@ TEST(ListTests, Append) {
     list::free(l12);
     list::free(l13);
     list::free(l31);
-    //list::free(l11);
+    list::free(l11);
 }
+
 TEST(ListTests, Index) {
     Node* const l1 = list::from_string("foo");
     Node* const l2 = list::from_string("a");
     
-    EXPECT_EQ(list::index(l1 ,l1->next->next), 2);
+    EXPECT_EQ(list::index(l1, l1->next->next), 2);
     EXPECT_EQ(list::index(l2, l1), -1);
+
+    list::free(l1);
+    list::free(l2);
+}
+
+TEST(ListTests, FindChar) {
+    Node* const l1 = list::from_string("I am Lucas");
+    Node* const l2 = list::from_string("a");
+    
+    EXPECT_EQ(list::find_char(l1, 'a'), l1->next->next);
+    EXPECT_EQ(list::find_char(l2, 'H'), nullptr);
+
+    list::free(l1);
+    list::free(l2);
+}
+
+TEST(ListTests, FindList) {
+    Node* const l1 = list::from_string("I am Lucas");
+    Node* const l2 = list::from_string("am");
+    Node* const l3 = list::from_string("");
+    
+    EXPECT_EQ(list::find_list(l1, l2), l1->next->next);
+    EXPECT_EQ(list::find_char(l2, 'H'), nullptr);
+
+    EXPECT_EQ(list::find_list(l3, l2), nullptr);
+
+    list::free(l1);
+    list::free(l2);
+    list::free(l3);
+}
+
+TEST(ListTests, Nth) {
+    Node* const l1 = list::from_string("I am Lucas");
+    Node* const l2 = list::from_string("a");
+    
+    EXPECT_EQ(list::nth(l1, 2), l1->next->next);
+    EXPECT_EQ(list::nth(l2, 0), l2);
 
     list::free(l1);
     list::free(l2);

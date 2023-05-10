@@ -98,6 +98,33 @@ int list::index(Node* head, Node* node)
     return -1;
 } 
 
+Node* list::find_char(Node* head, char c)
+{
+    if(!head)
+        return nullptr;
+    return head->data==c ? head : find_char(head->next, c);
+}
+
+Node* list::find_list (Node* haystack, Node* needle)
+{
+	if (!haystack)
+		return nullptr;
+	int len = length(needle);
+	if (len == 0)
+		return haystack;
+	for(Node* p=haystack; p!=nullptr; p=p->next)
+		if(compare(p, needle, len) == 0)
+			return p;
+	return nullptr;
+}
+
+Node* list::nth(Node* head, int n)
+{
+	if (n == 0)
+		return head;
+	return nth(head->next, n-1);
+}
+
 Node* list::last(Node* head)
 {
     Node* p = head;
