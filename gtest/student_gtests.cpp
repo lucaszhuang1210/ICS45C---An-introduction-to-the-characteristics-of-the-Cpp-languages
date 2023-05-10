@@ -97,4 +97,72 @@ TEST(ListTests, NCompare) {
     list::free(l4);
 }
 
+TEST(ListTests, Reverse) {
+    Node* const l1 = list::from_string("foo");
+    Node* const l2 = list::from_string("oof");
+    Node* const l3 = list::from_string("a");
+    Node* const l4 = list::from_string("");
+    
+    Node* rev1 = list::reverse(l1);
+    EXPECT_EQ(list::compare(rev1, l2), 0);
 
+    Node* rev3 = list::reverse(l3);
+    EXPECT_EQ(list::compare(rev3, l3), 0);
+
+    EXPECT_EQ(list::compare(list::reverse(l4), nullptr), 0);
+
+    list::free(l1);
+    list::free(l2);
+    list::free(l3);
+    list::free(l4);
+    list::free(rev1);
+    list::free(rev3);
+}
+
+TEST(ListTests, Last) {
+    Node* const l1 = list::from_string("foo");
+    Node* const l2 = list::from_string("a");
+    
+    EXPECT_EQ(list::last(l1)->data, 'o');
+    EXPECT_EQ(list::last(l2)->data, 'a');
+
+    list::free(l1);
+    list::free(l2);
+}
+
+TEST(ListTests, Append) {
+    Node* const l1 = list::from_string("foo");
+    Node* const l2 = list::from_string("app");
+    Node* const l3 = list::from_string("");
+
+    Node* l12 = list::append(l1,l2);
+    EXPECT_EQ(list::last(l12)->data, 'p');
+
+    Node* l13 = list::append(l1,l3);
+    EXPECT_EQ(list::last(l13)->data, 'o');
+
+    Node* l31 = list::append(l3,l1);
+    EXPECT_EQ(l31->data, 'f');
+
+    //Node* l11 = list::append(l1,l1);
+    //EXPECT_EQ(list::last(l11)->data, 'o');
+
+    list::free(l1);
+    list::free(l2);
+    list::free(l3);
+
+    list::free(l12);
+    list::free(l13);
+    list::free(l31);
+    //list::free(l11);
+}
+TEST(ListTests, Index) {
+    Node* const l1 = list::from_string("foo");
+    Node* const l2 = list::from_string("a");
+    
+    EXPECT_EQ(list::index(l1 ,l1->next->next), 2);
+    EXPECT_EQ(list::index(l2, l1), -1);
+
+    list::free(l1);
+    list::free(l2);
+}

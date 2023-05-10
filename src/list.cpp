@@ -72,7 +72,35 @@ int list::length(Node* head)
     return 1+length(head->next);
 }
 
-Node* reverse(Node* head)
+Node* list::reverse(Node* head)
 {
+    Node* rev = nullptr;
+    for(Node* p=head; p!=nullptr; p=p->next)
+        rev = new Node{p->data, rev};
+    return rev;
+}
 
+Node* list::append(Node* lhs, Node* rhs)
+{
+    if(!lhs)
+        return copy(rhs);
+    Node* head = copy(lhs);
+    last(head)->next = copy(rhs);
+    return head;
+}
+
+int list::index(Node* head, Node* node)
+{
+    int i = 0;
+    for(Node* p=head; p!=nullptr; p=p->next, ++i)
+        if(p == node)
+            return i;
+    return -1;
+} 
+
+Node* list::last(Node* head)
+{
+    Node* p = head;
+    for(; p->next!=nullptr; p=p->next) {}
+    return p;
 }
