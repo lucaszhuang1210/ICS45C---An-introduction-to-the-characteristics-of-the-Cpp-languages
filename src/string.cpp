@@ -78,6 +78,8 @@ int String::indexOf(char c) const
 
 int String::indexOf(const String &s) const
 {
+    if(s.head==nullptr)
+    { return 0;}
 	return index(head, find_list(head, s.head));
 }
 
