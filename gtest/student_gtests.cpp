@@ -163,7 +163,7 @@ TEST(ListTests, Index) {
     Node* const l2 = list::from_string("a");
     
     EXPECT_EQ(list::index(l1, list::last(l1)), length(l1)-1);
-    EXPECT_EQ(list::index(l2, l1), -1);
+    EXPECT_EQ(list::index(l2, l2), 0);
 
     list::free(l1);
     list::free(l2);
