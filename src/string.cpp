@@ -99,9 +99,7 @@ String String::operator+(const String &s) const
 
 String &String::operator+=(const String &s)
 {
-    Node* temp = head;
-    head = append(head, s.head);
-    free(temp);
+    list::last(head)->next = copy(s.head);
     return *this;
 }
 
