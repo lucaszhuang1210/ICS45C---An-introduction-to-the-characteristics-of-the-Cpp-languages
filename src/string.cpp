@@ -99,8 +99,10 @@ String String::operator+(const String &s) const
 
 String &String::operator+=(const String &s)
 {
-    String temp{append(head, s.head)};
-    swap(temp);
+    Node* temp = append(head, s.head);
+    free(head);
+    head = temp;
+    free(temp);
     return *this;
 }
 
