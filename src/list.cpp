@@ -91,8 +91,8 @@ Node* list::append(Node* lhs, Node* rhs)
 
 int list::index(Node* head, Node* node)
 {
-    if(!head)
-        return 0;
+    if(!node)
+        return -1;
     int i = 0;
     for(Node* p=head; p!=nullptr; p=p->next, ++i)
         if(p == node)

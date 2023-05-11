@@ -99,9 +99,9 @@ String String::operator+(const String &s) const
 
 String &String::operator+=(const String &s)
 {
-    Node* temp = append(head, s.head);
-    free(head);
-    head = temp;
+    Node* temp = head;
+    head = append(head, s.head);
+    free(temp);
     return *this;
 }
 
