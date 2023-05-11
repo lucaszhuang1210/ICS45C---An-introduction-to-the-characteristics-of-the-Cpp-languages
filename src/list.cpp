@@ -127,6 +127,8 @@ Node* list::nth(Node* head, int n)
 
 Node* list::last(Node* head)
 {
+    if (!head)
+        return nullptr;
     Node* p = head;
     for(; p->next!=nullptr; p=p->next) {}
     return p;
