@@ -102,7 +102,6 @@ String &String::operator+=(const String &s)
     Node* temp = append(head, s.head);
     free(head);
     head = temp;
-    free(temp);
     return *this;
 }
 

@@ -91,6 +91,8 @@ Node* list::append(Node* lhs, Node* rhs)
 
 int list::index(Node* head, Node* node)
 {
+    if(!head)
+        return 0;
     int i = 0;
     for(Node* p=head; p!=nullptr; p=p->next, ++i)
         if(p == node)
@@ -107,11 +109,11 @@ Node* list::find_char(Node* head, char c)
 
 Node* list::find_list (Node* haystack, Node* needle)
 {
-	if (!haystack)
-		return nullptr;
 	int len = length(needle);
 	if (len == 0)
 		return haystack;
+    if (!haystack)
+		return nullptr;
 	for(Node* p=haystack; p!=nullptr; p=p->next)
 		if(compare(p, needle, len) == 0)
 			return p;
