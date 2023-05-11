@@ -162,7 +162,7 @@ TEST(ListTests, Index) {
     Node* const l1 = list::from_string("foo");
     Node* const l2 = list::from_string("a");
     
-    EXPECT_EQ(list::index(l1, l1->next), 1);
+    EXPECT_EQ(list::index(l1, list::last(l1)), length(l1)-1);
     EXPECT_EQ(list::index(l2, l1), -1);
 
     list::free(l1);
