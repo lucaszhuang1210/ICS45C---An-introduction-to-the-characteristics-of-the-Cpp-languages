@@ -67,7 +67,10 @@ void Picture::add(const Shape& shape)
 void Picture::print_all(ostream& out) const
 {
     for (ListNode* p = head; p!=nullptr; p = p->next)
+    {
         p->shape->print(out);
+        p->shape->draw(out);
+    }
 }
 
 void Picture::draw_all(ostream& out) const

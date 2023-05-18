@@ -11,7 +11,8 @@ Shape::Shape(Point center, string name)
 
 void Shape::print(std::ostream& out) const
 {
-    out << name << "(" << center.x << ", " << center.y << ")" << endl;
+    out << name << " at (" << center.x << ", " << center.y << ") "
+         << "area = "<< this->area() << endl;
 }
 
 
