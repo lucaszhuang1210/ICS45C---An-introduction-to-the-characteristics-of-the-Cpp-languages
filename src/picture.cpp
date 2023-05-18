@@ -9,20 +9,45 @@ Picture::Picture()
 {
 }
 
-/*
-Picture::picture(const Picture& other)
+Picture::Picture(const Picture& other)
 :head(nullptr)
 {
-    ListNode* copy(ListNode* head)
-    {
-        if(!head)
-            return nullptr;
-        return new ListNode{head->shape->clone(), copy(head->next)};
-    }
-
     head = copy(other.head);
 }
-*/
+
+Picture::Picture(Picture&& other)
+:head{nullptr}, tail{nullptr}
+{
+    swap(other);
+    other.head = other.tail = nullptr;
+}
+
+void Picture::swap(Picture& other)
+{
+    std::swap(head, other.head);
+    std::swap(tail, other.tail);
+}
+
+Picture &Picture::operator=(const Picture& other)
+{
+    if (this == &other)
+        return *this;
+    if(head)
+        free(head);
+    head = copy(other.head);
+    return *this;
+    
+}
+
+Picture &Picture::operator=(Picture &&other)
+{
+    if (this == &other)
+        return *this;
+    free(head);
+    head = other.head;
+    other.head = nullptr;
+    return *this;
+}
 
 void Picture::add(const Shape& shape)
 {
@@ -61,11 +86,13 @@ double Picture::total_area() const
 
 Picture::~Picture()
 {
-    while(head)
-    {
-        ListNode* temp = head;
-        head = head->next;
-        delete temp->shape;
-        delete temp;
-    }
- }
+    free(head);
+}
+
+Picture::ListNode* Picture::copy(ListNode* head)
+{
+    if(!head)
+        return nullptr;
+    return new ListNode{head->shape->clone(), copy(head->next)};
+}
+

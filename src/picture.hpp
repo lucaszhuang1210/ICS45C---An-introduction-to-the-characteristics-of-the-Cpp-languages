@@ -27,6 +27,7 @@ public:
 
     ~Picture();
 
+ 
 private:
     struct ListNode 
     {
@@ -36,6 +37,19 @@ private:
 
     ListNode* head;
     ListNode* tail;
+
+    ListNode* copy(ListNode* head);
+    void free(Picture::ListNode* head)
+    {
+        if(!head)
+            return;
+        ListNode* temp = head;
+        free(head->next);
+        delete temp->shape;
+        delete temp;
+        return;
+    }
+
 };
 
 #endif

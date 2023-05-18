@@ -14,11 +14,9 @@ constexpr int P2DEFAULT = 3;
 void add_shapes(Picture& p, int i, int param1, int param2) 
 {
     p.add(Circle{{0, 0}, "Circle_" + to_string(i), i*param1});
+    p.add(Square{{0, 0}, "Square_" + to_string(i), i*param1});
     p.add(Triangle{{0, 0}, "Triangle_" + to_string(i), i*param1, i*param2});
-    // p.add(Rectangle{{0, 0}, "Rectangle_" + to_string(i), i*param1, i*param2});
-
-
-
+    p.add(Rectangle{{0, 0}, "Rectangle_" + to_string(i), i*param1, i*param2});
 }
 
 int get_param(int num, int argc, char** argv, int def) 
