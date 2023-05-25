@@ -59,8 +59,7 @@ TEST(ArrayTests, Fill) {
 
 TEST(ArrayTests, FillWithFn) {
     Array<int> arr{10};
-    auto fn = [](int i) { return i*i; };
-    arr.fill_with_fn(fn(3));
+    arr.fill_with_fn([](int i) { return i*i; }(3));
     EXPECT_EQ(arr[0], 9);
 }
 
