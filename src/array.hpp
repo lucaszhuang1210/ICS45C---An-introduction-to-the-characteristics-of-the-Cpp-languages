@@ -87,7 +87,7 @@ public:
         return buf[index];
     }
 
-    void fill(T val)
+    void fill(auto val)
     {
         for (int i=0; i<len; ++i)
             buf[i] = val;
