@@ -87,7 +87,7 @@ public:
         return buf[index];
     }
 
-    void fill(auto val)
+    void fill(T val)
     {
         for (int i=0; i<len; ++i)
             buf[i] = val;
@@ -97,7 +97,8 @@ public:
     template <typename Fn>
     void fill_with_fn(Fn fn)
     {
-        fill(fn);
+        for (int i=0; i<len; ++i)
+            buf[i] = fn(i);
     }
 
 private:

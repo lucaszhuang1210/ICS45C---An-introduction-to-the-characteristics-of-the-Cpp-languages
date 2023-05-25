@@ -36,7 +36,8 @@ public:
     void fill_with_fn(Fn fn)
     {
         for (int i=0; i<rows; ++i)
-            data.fill_with_fn(fn);
+            for (int j=0; j<cols; ++j)
+                data[i][j] = fn(i, j);
     }
 
 private:
