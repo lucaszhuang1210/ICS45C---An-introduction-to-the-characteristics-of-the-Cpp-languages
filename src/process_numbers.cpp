@@ -14,6 +14,7 @@ void split_odd_even(istream & numbers, ostream & odds, ostream& evens)
     ranges::sort(nums);
     ranges::copy_if(nums, ostream_iterator<int>(odds, " "), 
                                         [](int n) { return n%2 != 0; });
+    odds << endl;
     ranges::copy_if(nums, ostream_iterator<int>(evens, "\n"), 
                                         [](int n) { return n%2 == 0; });
 }
