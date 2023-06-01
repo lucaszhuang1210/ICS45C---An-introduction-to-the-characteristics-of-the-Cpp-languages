@@ -172,12 +172,20 @@ ostream& operator<< (std::ostream& out, const Student& s)
 
 void Student::compute_quiz_avg()
 {
-    if (quiz.size() ==0)
+    if(quiz.size() == 1)
+    {
+        quiz_avg = double(quiz[0]);
+    }
+    else if(quiz.empty())
+    {
         quiz_avg = 0.0;
-    else if(quiz.size() < 2)
-       quiz_avg = double(quiz[0]);
-
-    quiz_avg = accumulate(quiz.begin(), quiz.end(), 0.0)-ranges::min(quiz) / (quiz.size()-1);
+    }
+    else
+    {
+        int min = *std::min_element(quiz.begin(), quiz.end());
+        double sum = std::accumulate(quiz.begin(), quiz.end(), 0.0);
+        quiz_avg = (sum - min)/(quiz.size() -1);
+    }
 }
 
 void Student::compute_hw_avg()
