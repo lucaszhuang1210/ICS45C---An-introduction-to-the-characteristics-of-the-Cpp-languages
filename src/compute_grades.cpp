@@ -1,8 +1,7 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
+#include "compute_grades.hpp"
 #include <numeric>
-#include <sstream>
+#include <algorithm>
+#include <stdexcept>
 #include <iomanip>
 #include <cmath>
 
@@ -27,29 +26,30 @@ istream& operator>>(istream& in, Gradebook& b)
 
 void Gradebook::compute_grades()
 {
-    for(auto& s : students)
-        s.compute_grade();
+    for(Student& stu: students)
+    {
+        stu.compute_grade();
+    }
 }
-
 void Gradebook::sort()
 {
-    ranges::sort(students);
+    std::sort(students.begin(), students.end());
 }
-
 void Gradebook::validate() const
 {
-    for(const auto& s : students)
-        s.validate();
+    for(const auto& S: students)
+        S.validate();
 }
 
-ostream& operator<<(ostream& out, const Gradebook& b)
+std::ostream& operator << (std::ostream& out, const Gradebook& b)
 {
-    for(const auto& student : b.students)
-        out << student << "\n";
-
+    for(const auto& stu: b.students)
+    {
+        out << stu << "\n";
+    }
+    
     return out;
 }
-
 
 
 // ******************Student*******************
@@ -158,14 +158,14 @@ strong_ordering Student::operator <=> (const Student& other) const
 bool Student::operator==(const Student& other) const 
 { return last_name == other.last_name && first_name == other.first_name;  }
 
-ostream& operator<< (std::ostream& out, const Student& s)
+std::ostream& operator << (std::ostream& out, const Student& s)
 {
-    out << setw(8) << left << "Name: " << s.first_name<< " " << s.last_name << "\n";
-    out << setw(8) << left << "HW Ave: " << s.hw_avg << "\n";
-    out << setw(8) << left << "QZ Ave: " << s.quiz_avg << "\n";
-    out << setw(8) << left << "Final: " << s.final_score << "\n";
-    out << setw(8) << left << "Total: " << s.course_score << "\n";
-    out << setw(8) << left << "Grade: " << s.course_grade << "\n";
+    out << std::setw(8) << std::left << "Name: " << s.first_name<< " " << s.last_name << "\n";
+    out << std::setw(8) << std::left << "HW Ave: " << s.hw_avg << "\n";
+    out << std::setw(8) << std::left << "QZ Ave: " << s.quiz_avg << "\n";
+    out << std::setw(8) << std::left << "Final: " << s.final_score << "\n";
+    out << std::setw(8) << std::left << "Total: " << s.course_score << "\n";
+    out << std::setw(8) << std::left << "Grade: " << s.course_grade << "\n";
     
     return out;
     
@@ -192,20 +192,25 @@ void Student::compute_quiz_avg()
 
 void Student::compute_hw_avg()
 {
-    if (hw.size() < 2)
+    if(hw.size() == 1)
     {
-        hw_avg = hw[0];
-        return;
-    }else{
-        hw_avg = accumulate(hw.begin(), hw.end(), 0.0) / hw.size();
+        hw_avg = double(hw[0]);
     }
-
+    else if(hw.empty())
+    {
+        hw_avg = 0.0;
+    }
+    else
+    {
+        double sum = std::accumulate(hw.begin(), hw.end(), 0.0);
+        hw_avg = sum / hw.size();
+    }
 }
 
 void Student::compute_course_score()
 {
     compute_quiz_avg();
     compute_hw_avg();
-    double total = quiz_avg * QUIZ_WEIGHT + hw_avg*HOMEWORK_WEIGHT + final_score*FINAL_WEIGHT;
-    course_score = round(total);
+    double total = quiz_avg * QUIZ_WEIGHT + hw_avg * HOMEWORK_WEIGHT + final_score * FINAL_WEIGHT;
+    course_score = std::round(total);
 }
