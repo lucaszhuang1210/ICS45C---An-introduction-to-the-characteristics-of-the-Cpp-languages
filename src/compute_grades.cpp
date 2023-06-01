@@ -53,44 +53,52 @@ std::ostream& operator << (std::ostream& out, const Gradebook& b)
 
 
 // ******************Student*******************
-istream& operator>>(istream& in, Student& s)
+std::istream& operator >> (std::istream& in, Student& s)
 {
-    string line;
+    std::string line;
     s.quiz.clear();
     s.hw.clear();
-    while(getline(in, line) && !line.empty())
+    while(std::getline(in, line) && !line.empty())
     {
-        istringstream stm(line);
-        string word;
-        stm >> word;
-    
-        if (word == "Name")
+        std::istringstream l(line);
+        std::string keyword;
+        l >> keyword;
+        if(keyword == "Name")
         {
-            string temp;
-            stm >> s.first_name;
-            stm >> s.last_name;
-            while(stm >> temp)
+            std::string temp;
+            l >> s.first_name >> s.last_name;
+            while(l >> temp)
+            {
                 s.last_name = s.last_name + " " + temp;
-        }else if(word == "Quiz") {   
-            int q;
-            while(stm >> q)
-                s.quiz.push_back(q);
+            }
+        }
+        else if(keyword == "Quiz")
+        {
+            int qz;
+            while(l >> qz)
+            {
+                s.quiz.push_back(qz);
+            }
             if(s.quiz.size() == 0)
                 s.quiz.push_back(0);
-        }else if(word == "HW") {
-            int h;
-            while(stm >> h)
-                s.hw.push_back(h);
-            if(s.hw.size()==0)
-                s.hw.push_back(0);
-        }else if(word == "Final") {
-            stm >> s.final_score;
         }
-    };
-
+        else if(keyword == "HW")
+        {
+            int h;
+            while(l >> h)
+            {
+                s.hw.push_back(h);
+            }
+            if(s.hw.size() == 0)
+                s.hw.push_back(0);
+        }
+        else if(keyword == "Final")
+        {
+            l >> s.final_score;
+        }
+    }
     return in;
 }
-
 void Student::validate() const
 {
     auto valid = [](int n) 
