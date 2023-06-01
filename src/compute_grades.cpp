@@ -75,11 +75,13 @@ istream& operator>>(istream& in, Student& s)
             int q;
             while(stm >> q)
                 s.quiz.push_back(q);
+            if(s.quiz.size() == 0)
+                s.quiz.push_back(0);
         }else if(word == "HW") {
             int h;
             while(stm >> h)
                 s.hw.push_back(h);
-            if(!s.hw.size())
+            if(s.hw.size()==0)
                 s.hw.push_back(0);
         }else if(word == "Final") {
             stm >> s.final_score;
@@ -104,27 +106,27 @@ void Student::validate() const
 void Student::compute_grade()
 {
     compute_course_score();
-    if(course_score > 96)
+    if(course_score >= 97 && course_score <= 100)
         course_grade = "A+";
-    else if(course_score > 92 && course_score <= 96)
+    else if(course_score >= 93 && course_score <= 96)
         course_grade = "A";
-    else if(course_score > 89 && course_score <= 92)
+    else if(course_score >= 90 && course_score <= 92)
         course_grade = "A-";
-    else if(course_score > 86 && course_score <= 89)
+    else if(course_score >= 87 && course_score <= 89)
         course_grade = "B+";
-    else if(course_score > 82 && course_score <= 86)
+    else if(course_score >= 83 && course_score <= 86)
         course_grade = "B";
-    else if(course_score > 79 && course_score <= 82)
+    else if(course_score >= 80 && course_score <= 82)
         course_grade = "B-";
-    else if(course_score > 76 && course_score <= 79)
+    else if(course_score >= 77 && course_score <= 79)
         course_grade = "C+";
-    else if(course_score > 72 && course_score <= 76)
+    else if(course_score >= 73 && course_score <= 76)
         course_grade = "C";
-    else if(course_score > 69 && course_score <= 72)
+    else if(course_score >= 70 && course_score <= 72)
         course_grade = "C-";
-    else if(course_score > 66 && course_score <= 69)
+    else if(course_score >= 67 && course_score <= 69)
         course_grade = "D+";
-    else if(course_score > 62 && course_score <= 66)
+    else if(course_score >= 63 && course_score <= 66)
         course_grade = "D";
     else if(course_score >= 60 && course_score <= 62)
         course_grade = "D-";
@@ -154,7 +156,7 @@ strong_ordering Student::operator <=> (const Student& other) const
 }
 
 bool Student::operator==(const Student& other) const 
-{ return other.last_name == last_name && other.first_name == first_name;  }
+{ return last_name == other.last_name && first_name == other.first_name;  }
 
 ostream& operator<< (std::ostream& out, const Student& s)
 {
