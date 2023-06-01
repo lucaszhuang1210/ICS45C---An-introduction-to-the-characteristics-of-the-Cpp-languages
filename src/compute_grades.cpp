@@ -27,7 +27,7 @@ istream& operator>>(istream& in, Gradebook& b)
 
 void Gradebook::compute_grades()
 {
-    for(auto s : students)
+    for(auto& s : students)
         s.compute_grade();
 }
 
@@ -38,7 +38,7 @@ void Gradebook::sort()
 
 void Gradebook::validate() const
 {
-    for(auto s : students)
+    for(const auto& s : students)
         s.validate();
 }
 
