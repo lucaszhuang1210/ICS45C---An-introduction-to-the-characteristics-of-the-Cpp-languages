@@ -195,5 +195,6 @@ void Student::compute_course_score()
 {
     compute_quiz_avg();
     compute_hw_avg();
-    course_score = std::round(quiz_avg * QUIZ_WEIGHT + hw_avg*HOMEWORK_WEIGHT + final_score*FINAL_WEIGHT);
+    double total = quiz_avg * QUIZ_WEIGHT + hw_avg*HOMEWORK_WEIGHT + final_score*FINAL_WEIGHT;
+    course_score = round(total);
 }
