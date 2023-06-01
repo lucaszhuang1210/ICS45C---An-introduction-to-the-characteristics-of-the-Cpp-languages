@@ -122,9 +122,9 @@ void Student::compute_grade()
         course_grade = "C";
     else if(course_score > 69 && course_score <= 72)
         course_grade = "C-";
-    else if(course_score > 65 && course_score <= 69)
+    else if(course_score > 66 && course_score <= 69)
         course_grade = "D+";
-    else if(course_score > 61 && course_score <= 66)
+    else if(course_score > 62 && course_score <= 66)
         course_grade = "D";
     else if(course_score >= 60 && course_score <= 62)
         course_grade = "D-";
