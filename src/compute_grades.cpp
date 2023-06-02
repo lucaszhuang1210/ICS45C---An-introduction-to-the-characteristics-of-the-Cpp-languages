@@ -174,7 +174,7 @@ std::ostream& operator << (std::ostream& out, const Student& s)
 
 void Student::compute_quiz_avg()
 {
-    if(quiz.size() == 0)
+    if(quiz.empty())
     {
         quiz_avg = 0.0;
     }
@@ -192,7 +192,7 @@ void Student::compute_quiz_avg()
 
 void Student::compute_hw_avg()
 {
-    if(hw.size() == 0)
+    if(hw.empty())
     {
         hw_avg = 0.0;
         
