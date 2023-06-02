@@ -16,7 +16,8 @@ constexpr double FINAL_WEIGHT = 0.3;
 // ******************Gradebook*******************
 istream& operator>>(istream& in, Gradebook& b)
 {
-    Student student;
+    b.students.clear();
+    Student student{};
     while(in >> student)
     {
         b.students.push_back(student);
