@@ -174,13 +174,13 @@ std::ostream& operator << (std::ostream& out, const Student& s)
 
 void Student::compute_quiz_avg()
 {
-    if(quiz.size() == 1)
-    {
-        quiz_avg = double(quiz[0]);
-    }
-    else if(quiz.empty())
+    if(quiz.size() == 0)
     {
         quiz_avg = 0.0;
+    }
+    else if(quiz.size() == 1)
+    {
+        quiz_avg = double(quiz[0]);
     }
     else
     {
@@ -192,13 +192,14 @@ void Student::compute_quiz_avg()
 
 void Student::compute_hw_avg()
 {
-    if(hw.size() == 1)
-    {
-        hw_avg = double(hw[0]);
-    }
-    else if(hw.empty())
+    if(hw.size() == 0)
     {
         hw_avg = 0.0;
+        
+    }
+    else if(hw.size() == 1)
+    {
+        hw_avg = double(hw[0]);
     }
     else
     {
