@@ -5,28 +5,102 @@
 #include <iomanip>
 #include <cmath>
 
+#include "compute_grades.hpp"
+
+using namespace std; 
+
+constexpr double QUIZ_WEIGHT = 0.4;
+constexpr double HOMEWORK_WEIGHT = 0.3;
+constexpr double FINAL_WEIGHT = 0.3;
+
+// ******************Gradebook*******************
+istream& operator>>(istream& in, Gradebook& b)
+{
+    Student student;
+    while(in >> student)
+    {
+        b.students.push_back(student);
+    }
+    return in;
+}
+
+void Gradebook::compute_grades()
+{
+    for(Student& stu: students)
+    {
+        stu.compute_grade();
+    }
+}
+void Gradebook::sort()
+{
+    std::sort(students.begin(), students.end());
+}
+void Gradebook::validate() const
+{
+    for(const auto& S: students)
+        S.validate();
+}
+
+std::ostream& operator << (std::ostream& out, const Gradebook& b)
+{
+    for(const auto& stu: b.students)
+    {
+        out << stu << "\n";
+    }
+    
+    return out;
+}
 
 
-using namespace std;
+// ******************Student*******************
+istream& operator>>(istream& in, Student& s)
+{
+    string line;
+    s.quiz.clear();
+    s.hw.clear();
+    while(getline(in, line) && !line.empty())
+    {
+        istringstream stm(line);
+        string word;
+        stm >> word;
+    
+        if (word == "Name")
+        {
+            string temp;
+            stm >> s.first_name;
+            stm >> s.last_name;
+            while(stm >> temp)
+                s.last_name = s.last_name + " " + temp;
+        }else if(word == "Quiz") {   
+            int q;
+            while(stm >> q)
+                s.quiz.push_back(q);
+            if(s.quiz.size() == 0)
+                s.quiz.push_back(0);
+        }else if(word == "HW") {
+            int h;
+            while(stm >> h)
+                s.hw.push_back(h);
+            if(s.hw.size()==0)
+                s.hw.push_back(0);
+        }else if(word == "Final") {
+            stm >> s.final_score;
+        }
+    };
 
-//student class
+    return in;
+}
+
 void Student::validate() const
 {
-    for(const auto& Q : quiz)
-    {
-        if(Q < 0 || Q > 100)
-            throw std::domain_error("Error: invalid percentage" + std::to_string(Q));
-    }
-    
-    for(const auto& H : hw)
-    {
-        if(H < 0 || H > 100)
-            throw std::domain_error("Error: invalid percentage" + std::to_string(H));
-    }
-    
-    if(final_score < 0 || final_score > 100)
-        throw std::domain_error("Error: invalid percentage" + std::to_string(final_score));
-    
+    auto valid = [](int n) 
+    {    
+        if (n<0 || n>100)
+            throw domain_error(string("Error: invalid percentage "+to_string(n)));
+    };
+    ranges::for_each(quiz, valid);
+    ranges::for_each(hw, valid);
+    valid(final_score);
 }
 
 void Student::compute_grade()
@@ -60,57 +134,29 @@ void Student::compute_grade()
         course_grade = "F";
 }
 
-bool Student::operator ==(const Student& other) const
+strong_ordering Student::operator <=> (const Student& other) const
 {
-    return last_name == other.last_name && first_name == other.first_name;
+    if(auto cmp = last_name <=> other.first_name; cmp!= 0)
+        return cmp;
+    else if(auto cmp = first_name <=> other.first_name; cmp!= 0)
+        return cmp;
+    else if (quiz_avg < other.quiz_avg)
+        return strong_ordering::less;
+    else if (quiz_avg > other.quiz_avg)
+        return strong_ordering::greater;
+    else if (hw_avg < other.hw_avg)
+        return strong_ordering::less;
+    else if (hw_avg > other.hw_avg)
+        return strong_ordering::greater;
+    else if (course_score < other.course_score)
+        return strong_ordering::less;
+    else if (course_score > other.course_score)
+        return strong_ordering::greater;
+    return strong_ordering::equal;
 }
 
-std::istream& operator >> (std::istream& in, Student& s)
-{
-    std::string line;
-    s.quiz.clear();
-    s.hw.clear();
-    while(std::getline(in, line) && !line.empty())
-    {
-        std::istringstream l(line);
-        std::string keyword;
-        l >> keyword;
-        if(keyword == "Name")
-        {
-            std::string temp;
-            l >> s.first_name >> s.last_name;
-            while(l >> temp)
-            {
-                s.last_name = s.last_name + " " + temp;
-            }
-        }
-        else if(keyword == "Quiz")
-        {
-            int qz;
-            while(l >> qz)
-            {
-                s.quiz.push_back(qz);
-            }
-            if(s.quiz.size() == 0)
-                s.quiz.push_back(0);
-        }
-        else if(keyword == "HW")
-        {
-            int h;
-            while(l >> h)
-            {
-                s.hw.push_back(h);
-            }
-            if(s.hw.size() == 0)
-                s.hw.push_back(0);
-        }
-        else if(keyword == "Final")
-        {
-            l >> s.final_score;
-        }
-    }
-    return in;
-}
+bool Student::operator==(const Student& other) const 
+{ return last_name == other.last_name && first_name == other.first_name;  }
 
 std::ostream& operator << (std::ostream& out, const Student& s)
 {
@@ -124,6 +170,7 @@ std::ostream& operator << (std::ostream& out, const Student& s)
     return out;
     
 }
+
 
 void Student::compute_quiz_avg()
 {
@@ -164,47 +211,6 @@ void Student::compute_course_score()
 {
     compute_quiz_avg();
     compute_hw_avg();
-    double sum = quiz_avg * QUIZ_WEIGHT + hw_avg * HOMEWORK_WEIGHT + final_score * FINAL_WEIGHT;
-    course_score = std::round(sum);
-}
-
-
-
-//Gradebook class
-void Gradebook::compute_grades()
-{
-    for(Student& stu: students)
-    {
-        stu.compute_grade();
-    }
-}
-void Gradebook::sort()
-{
-    std::sort(students.begin(), students.end());
-}
-void Gradebook::validate() const
-{
-    for(const auto& S: students)
-        S.validate();
-}
-
-std::istream& operator >> (std::istream& in, Gradebook& b)
-{
-    b.students.clear();
-    Student stu{};
-    while(in >> stu)
-    {
-        b.students.push_back(stu);
-    }
-    return in;
-}
-
-std::ostream& operator << (std::ostream& out, const Gradebook& b)
-{
-    for(const auto& stu: b.students)
-    {
-        out << stu << "\n";
-    }
-    
-    return out;
+    double total = quiz_avg * QUIZ_WEIGHT + hw_avg * HOMEWORK_WEIGHT + final_score * FINAL_WEIGHT;
+    course_score = std::round(total);
 }
