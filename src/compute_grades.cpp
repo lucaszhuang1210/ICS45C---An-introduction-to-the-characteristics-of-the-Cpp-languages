@@ -28,36 +28,6 @@ void Student::validate() const
         throw std::domain_error("Error: invalid percentage" + std::to_string(final_score));
     
 }
-void Student::compute_grade()
-{
-    compute_course_score();
-    if(course_score >= 97 && course_score <= 100)
-        course_grade = "A+";
-    else if(course_score >= 93 && course_score <= 96)
-        course_grade = "A";
-    else if(course_score >= 90 && course_score <= 92)
-        course_grade = "A-";
-    else if(course_score >= 87 && course_score <= 89)
-        course_grade = "B+";
-    else if(course_score >= 83 && course_score <= 86)
-        course_grade = "B";
-    else if(course_score >= 80 && course_score <= 82)
-        course_grade = "B-";
-    else if(course_score >= 77 && course_score <= 79)
-        course_grade = "C+";
-    else if(course_score >= 73 && course_score <= 76)
-        course_grade = "C";
-    else if(course_score >= 70 && course_score <= 72)
-        course_grade = "C-";
-    else if(course_score >= 67 && course_score <= 69)
-        course_grade = "D+";
-    else if(course_score >= 63 && course_score <= 66)
-        course_grade = "D";
-    else if(course_score >= 60 && course_score <= 62)
-        course_grade = "D-";
-    else
-        course_grade = "F";
-}
 
 void Student::compute_grade()
 {
