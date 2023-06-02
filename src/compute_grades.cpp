@@ -88,10 +88,6 @@ istream& operator>>(istream& in, Student& s)
             stm >> s.final_score;
         }
     }
-    if(s.quiz.size() == 0)
-                s.quiz.push_back(0);
-    if(s.hw.size()==0)
-                s.hw.push_back(0);
     return in;
 }
 
