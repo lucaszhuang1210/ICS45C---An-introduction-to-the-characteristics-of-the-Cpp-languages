@@ -136,21 +136,8 @@ strong_ordering Student::operator <=> (const Student& other) const
 {
     if(auto cmp = last_name <=> other.first_name; cmp!= 0)
         return cmp;
-    else if(auto cmp = first_name <=> other.first_name; cmp!= 0)
+    if(auto cmp = first_name <=> other.first_name; cmp!= 0)
         return cmp;
-    else if (quiz_avg < other.quiz_avg)
-        return strong_ordering::less;
-    else if (quiz_avg > other.quiz_avg)
-        return strong_ordering::greater;
-    else if (hw_avg < other.hw_avg)
-        return strong_ordering::less;
-    else if (hw_avg > other.hw_avg)
-        return strong_ordering::greater;
-    else if (course_score < other.course_score)
-        return strong_ordering::less;
-    else if (course_score > other.course_score)
-        return strong_ordering::greater;
-    return strong_ordering::equal;
 }
 
 bool Student::operator==(const Student& other) const 
