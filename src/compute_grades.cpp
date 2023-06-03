@@ -134,10 +134,7 @@ void Student::compute_grade()
 
 strong_ordering Student::operator <=> (const Student& other) const
 {
-    if(auto cmp = last_name <=> other.first_name; cmp!= 0)
-        return cmp;
-    if(auto cmp = first_name <=> other.first_name; cmp!= 0)
-        return cmp;
+    return (last_name+first_name) <=> (other.last_name+other.first_name);
 }
 
 bool Student::operator==(const Student& other) const 
