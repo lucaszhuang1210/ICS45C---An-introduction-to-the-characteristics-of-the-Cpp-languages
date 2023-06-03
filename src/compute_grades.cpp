@@ -1,4 +1,3 @@
-#include "compute_grades.hpp"
 #include <numeric>
 #include <algorithm>
 #include <stdexcept>
@@ -68,8 +67,7 @@ istream& operator>>(istream& in, Student& s)
         if (word == "Name")
         {
             string temp;
-            stm >> s.first_name;
-            stm >> s.last_name;
+            l >> s.first_name >> s.last_name;
             while(stm >> temp)
                 s.last_name = s.last_name + " " + temp;
         }else if(word == "Quiz") {   
@@ -174,13 +172,13 @@ std::ostream& operator << (std::ostream& out, const Student& s)
 
 void Student::compute_quiz_avg()
 {
-    if(quiz.empty())
-    {
-        quiz_avg = 0.0;
-    }
-    else if(quiz.size() == 1)
+    if(quiz.size() == 1)
     {
         quiz_avg = double(quiz[0]);
+    }
+    else if(quiz.empty())
+    {
+        quiz_avg = 0.0;
     }
     else
     {
@@ -192,14 +190,13 @@ void Student::compute_quiz_avg()
 
 void Student::compute_hw_avg()
 {
-    if(hw.empty())
-    {
-        hw_avg = 0.0;
-        
-    }
-    else if(hw.size() == 1)
+    if(hw.size() == 1)
     {
         hw_avg = double(hw[0]);
+    }
+    else if(hw.empty())
+    {
+        hw_avg = 0.0;
     }
     else
     {
