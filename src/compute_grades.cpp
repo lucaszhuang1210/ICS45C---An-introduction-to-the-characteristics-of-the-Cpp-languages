@@ -67,7 +67,7 @@ istream& operator>>(istream& in, Student& s)
         if (word == "Name")
         {
             string temp;
-            l >> s.first_name >> s.last_name;
+            stm >> s.first_name >> s.last_name;
             while(stm >> temp)
                 s.last_name = s.last_name + " " + temp;
         }else if(word == "Quiz") {   
